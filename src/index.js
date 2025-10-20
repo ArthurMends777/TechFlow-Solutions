@@ -13,6 +13,17 @@ app.get('/', (req, res) => {
   res.send('API da TechFlow Solutions rodando!');
 });
 
+app.get('/tasks', (req, res) => {
+  try {
+    const allTasks = taskRepository.getAllTasks();
+
+    res.status(200).json(allTasks);
+
+  } catch (error) {
+    res.status(500).json({ error: 'Erro interno ao buscar as tarefas.' });
+  }
+});
+
 app.post('/tasks', (req, res) => {
   try {
     const { title, description } = req.body;
