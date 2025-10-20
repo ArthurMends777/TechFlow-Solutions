@@ -1,0 +1,25 @@
+{
+  "name": "techflow-solutions",
+  "version": "1.0.0",
+  "description": "Projeto desenvolvido para a disciplina de Engenharia de Software, simulando o desenvolvimento de um sistema de gerenciamento de tarefas para a startup \"TechFlow Solutions\".",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArthurMends777/techflow-solutions.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ArthurMends777/techflow-solutions/issues"
+  },
+  "homepage": "https://github.com/ArthurMends777/techflow-solutions#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
