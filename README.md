@@ -9,11 +9,9 @@ O objetivo é criar um sistema web que permita a uma equipe de logística acompa
 ## 2. Escopo
 
 A versão inicial (MVP) do projeto se concentrará nas seguintes funcionalidades:
-* [ ] Autenticação de usuários (Login/Cadastro).
 * [x] CRUD (Create, Read, Update, Delete) de Tarefas.
-* [ ] Painel visual (Kanban) para visualização das tarefas.
+* [X] Painel visual (Kanban) para visualização das tarefas.
 
-*(Nota: Iremos implementar o CRUD de Tarefas primeiro)*
 
 ## 3. Metodologia Adotada
 
@@ -23,17 +21,18 @@ Este projeto utiliza uma metodologia ágil híbrida, combinando:
 
 ## 4. Como Executar o Sistema
 
-*(Esta seção será preenchida quando tivermos o código base)*
-
 1.  Clone o repositório: `git clone ...`
 2.  Instale as dependências: `npm install`
 3.  Execute o projeto: `npm start`
 
 ---
-*Seção de Gestão de Mudanças (será usada na Task 6)*
 
 ## 5. Simulação de Gestão de Mudanças
 
-* **Mudança Solicitada (Data: XX/XX/XXXX):** [Ainda não definida]
-* **Justificativa:** [Ainda não definida]
-* **Impacto no Escopo:** [Ainda não definida]
+* **Mudança Solicitada (Data: 20/10/2025):** Adição do campo `priority` (prioridade) ao modelo de Tarefas.
+* **Justificativa:** O cliente (startup de logística) identificou a necessidade de priorizar tarefas críticas para otimizar o fluxo de trabalho da equipe, o que não era possível apenas com o campo `status`.
+* **Impacto no Escopo:**
+    * **Model:** O `taskRepository` deve ser atualizado para incluir `priority` (ex: 'Baixa', 'Média', 'Alta') na criação e atualização de tarefas.
+    * **API:** A rota `POST /tasks` deve aceitar o campo `priority` (opcional).
+    * **API:** A rota `PUT /tasks/:id` deve permitir a atualização do campo `priority`.
+    * **Testes:** Os testes devem ser atualizados para refletir a nova estrutura do objeto de tarefa.
