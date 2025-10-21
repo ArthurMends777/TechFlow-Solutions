@@ -21,6 +21,35 @@ document.addEventListener('DOMContentLoaded', () => {
             <button class="delete-btn">X</button>
         `;
 
+        const deleteBtn = card.querySelector('.delete-btn');
+
+        deleteBtn.addEventListener('click', async (event) => {
+            event.stopPropagation(); 
+
+            if (!confirm(`Tem certeza que deseja deletar a tarefa: "${task.title}"?`)) {
+                return;
+            }
+
+            console.log(`Deletando tarefa ID: ${task.id}`);
+
+            try {
+                const response = await fetch(`${API_URL}/${task.id}`, {
+                    method: 'DELETE',
+                });
+
+                if (response.ok) {
+                    card.remove(); 
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(`Erro da API: ${errorData.error || response.statusText}`);
+                }
+
+            } catch (error) {
+                console.error('Falha ao deletar tarefa:', error);
+                alert(`Não foi possível deletar a tarefa: ${error.message}`);
+            }
+        });
+
         return card;
     }
 
