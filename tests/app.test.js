@@ -8,12 +8,14 @@ describe('API de Tarefas - Testes de Validação', () => {
       .post('/tasks')
       .send({
         title: 'Tarefa de Teste',
-        description: 'Descrição do teste'
+        description: 'Descrição do teste',
+        priority: 'Alta'
       });
 
     expect(response.statusCode).toBe(201);
     expect(response.body).toHaveProperty('id');
     expect(response.body.title).toBe('Tarefa de Teste');
+    expect(response.body.priority).toBe('Alta');
   });
 
   /**
