@@ -12,16 +12,17 @@ module.exports = {
    * Adiciona uma nova tarefa ao banco de dados.
    * @param {string} title - Título da tarefa
    * @param {string} description - Descrição da tarefa
-   * @param {string} status - Status da tarefa
+   * @param {string} status - Status da 
+   * @param {string} priority - Prioridade da tarefa (Baixa, Média, Alta)
    * @returns {object} A nova tarefa criada
    */
   createTask: (title, description) => {
-    // Cria o objeto da nova tarefa
     const newTask = {
       id: idCounter++,
       title: title,
       description: description || "",
       status: 'A Fazer',
+      priority: priority || 'Média',
       createdAt: new Date()
     };
     
@@ -54,7 +55,7 @@ module.exports = {
         taskToUpdate.title = updates.title || taskToUpdate.title;
         taskToUpdate.description = updates.description || taskToUpdate.description;
         taskToUpdate.status = updates.status || taskToUpdate.status;
-
+        taskToUpdate.priority = updates.priority || taskToUpdate.priority;
         return taskToUpdate;
     },
 
