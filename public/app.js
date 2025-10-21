@@ -8,6 +8,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const API_URL = 'http://localhost:3000/tasks';
 
+    function createTaskCard(task) {
+        const card = document.createElement('div');
+        card.className = 'task-card';
+        card.draggable = true;
+        card.dataset.id = task.id;
+
+        card.innerHTML = `
+            <h4>${task.title}</h4>
+            <p>${task.description}</p>
+            <span>Prioridade: ${task.priority}</span>
+            <button class="delete-btn">X</button>
+        `;
+
+        return card;
+    }
+
     async function fetchTasks() {
         console.log('Buscando tarefas...');
         try {
@@ -21,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             console.log('Tarefas recebidas:', tasks);
 
-            // renderTasks(tasks); 
+            renderTasks(tasks); 
 
         } catch (error) {
             console.error('Falha ao buscar tarefas:', error);
@@ -29,6 +45,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function renderTasks(tasks) {
+        todoContainer.innerHTML = '';
+        inProgressContainer.innerHTML = '';
+        doneContainer.innerHTML = '';
+
+        tasks.forEach(task => {
+            const card = createTaskCard(task);
+
+            if (task.status === 'A Fazer') {
+                todoContainer.appendChild(card);
+            } else if (task.status === 'Em Progresso') {
+                inProgressContainer.appendChild(card);
+            } else if (task.status === 'Concluído') {
+                doneContainer.appendChild(card);
+            }
+        });
+    }
 
     fetchTasks();
 
