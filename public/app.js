@@ -63,6 +63,53 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    async function handleTaskFormSubmit(event) {
+        event.preventDefault();
+
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const priority = document.getElementById('priority').value;
+
+        if (!title) {
+            alert('Por favor, preencha o título da tarefa.');
+            return;
+        }
+
+        const newTaskData = {
+            title: title,
+            description: description,
+            priority: priority
+        };
+
+        console.log('Enviando nova tarefa:', newTaskData);
+
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newTaskData),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Erro da API: ${errorData.error || response.statusText}`);
+            }
+
+            taskForm.reset();
+
+            await fetchTasks();
+
+        } catch (error) {
+            console.error('Falha ao criar tarefa:', error);
+            alert(`Não foi possível criar a tarefa: ${error.message}`);
+        }
+    }
+
+
+    taskForm.addEventListener('submit', handleTaskFormSubmit);
+
     fetchTasks();
 
 });
