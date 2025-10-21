@@ -37,6 +37,25 @@ module.exports = {
    */
   getAllTasks: () => {
     return [...tasksDB];
-  }
+  },
+
+    findById: (id) => {
+        const taskId = parseInt(id, 10);
+        return tasksDB.find(task => task.id === taskId);
+    },
+
+    updateTask: (id, updates) => {
+        const taskToUpdate = module.exports.findById(id);
+
+        if (!taskToUpdate) {
+        return null;
+        }
+
+        taskToUpdate.title = updates.title || taskToUpdate.title;
+        taskToUpdate.description = updates.description || taskToUpdate.description;
+        taskToUpdate.status = updates.status || taskToUpdate.status;
+
+        return taskToUpdate;
+    }
 
 };
