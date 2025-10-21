@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban - TechFlow Solutions</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Quadro Kanban - TechFlow</h1>
+    </header>
+
+    <section class="form-container">
+        <h2>Criar Nova Tarefa</h2>
+        <form id="task-form">
+            <div class="form-group">
+                <label for="title">Título:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Descrição:</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="priority">Prioridade:</label>
+                <select id="priority" name="priority">
+                    <option value="Baixa">Baixa</option>
+                    <option value="Média" selected>Média</option>
+                    <option value="Alta">Alta</option>
+                </select>
+            </div>
+            <button type="submit">Adicionar Tarefa</button>
+        </form>
+    </section>
+
+    <main class="kanban-board">
+
+        <div class="kanban-column" id="column-todo">
+            <h3>A Fazer</h3>
+            <div class="tasks-container" data-status="A Fazer">
+                </div>
+        </div>
+
+        <div class="kanban-column" id="column-in-progress">
+            <h3>Em Progresso</h3>
+            <div class="tasks-container" data-status="Em Progresso">
+                </div>
+        </div>
+
+        <div class="kanban-column" id="column-done">
+            <h3>Concluído</h3>
+            <div class="tasks-container" data-status="Concluído">
+                </div>
+        </div>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
