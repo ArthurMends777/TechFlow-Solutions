@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const inProgressContainer = document.querySelector('#column-in-progress .tasks-container');
     const doneContainer = document.querySelector('#column-done .tasks-container');
 
+    let draggedCardId = null;
+    
     const API_URL = 'http://localhost:3000/tasks';
 
     function createTaskCard(task) {
@@ -48,6 +50,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Falha ao deletar tarefa:', error);
                 alert(`Não foi possível deletar a tarefa: ${error.message}`);
             }
+        });
+
+        card.addEventListener('dragstart', (event) => {
+            draggedCardId = task.id;
+            
+            setTimeout(() => {
+                card.style.opacity = '0.5';
+            }, 0);
+        });
+
+        card.addEventListener('dragend', () => {
+            draggedCardId = null;
+
+            card.style.opacity = '1';
         });
 
         return card;
@@ -136,8 +152,68 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    async function updateTaskStatus(taskId, newStatus) {
+        console.log(`Atualizando status da Tarefa ${taskId} para: ${newStatus}`);
+        
+        try {
+            const response = await fetch(`${API_URL}/${taskId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: newStatus }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Erro da API: ${errorData.error || response.statusText}`);
+            }
+
+            return true; 
+
+        } catch (error) {
+            console.error('Falha ao atualizar status:', error);
+            alert(`Não foi possível mover a tarefa: ${error.message}`);
+            return false;
+        }
+    }
+
 
     taskForm.addEventListener('submit', handleTaskFormSubmit);
+
+    const allContainers = [todoContainer, inProgressContainer, doneContainer];
+
+    allContainers.forEach(container => {
+        
+        container.addEventListener('dragover', (event) => {
+            event.preventDefault();
+        });
+
+        container.addEventListener('drop', async (event) => {
+            event.preventDefault();
+
+            if (!draggedCardId) {
+                return;
+            }
+
+            const newStatus = container.dataset.status;
+
+            const cardElement = document.querySelector(`[data-id="${draggedCardId}"]`);
+            
+            const oldStatus = cardElement.parentElement.dataset.status;
+
+            if (newStatus === oldStatus) {
+                container.appendChild(cardElement);
+                return;
+            }
+
+            const success = await updateTaskStatus(draggedCardId, newStatus);
+
+            if (success) {
+                container.appendChild(cardElement);
+            }
+        });
+    });
 
     fetchTasks();
 
