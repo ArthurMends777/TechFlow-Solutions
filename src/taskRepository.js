@@ -16,7 +16,7 @@ module.exports = {
    * @param {string} priority - Prioridade da tarefa (Baixa, Média, Alta)
    * @returns {object} A nova tarefa criada
    */
-  createTask: (title, description) => {
+  createTask: (title, description, priority) => {
     const newTask = {
       id: idCounter++,
       title: title,
